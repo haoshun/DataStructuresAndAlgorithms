@@ -29,7 +29,11 @@ void testBinaryHeap()
 
 int main(int argc, const char * argv[]) {
 
-    testBinaryHeap();
+    //testBinaryHeap();
+    
+    int i = 0x12345678;
+    
+    int* p = &i;
     
     
     return 0;
