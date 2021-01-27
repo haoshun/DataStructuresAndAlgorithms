@@ -27,14 +27,37 @@ void testBinaryHeap()
     
 }
 
+
+
+char* getStr()
+{
+    int capacity = 10;
+    int len = 1;
+    char* str = (char*)calloc(capacity, sizeof(char));
+
+    while('\n' != (str[len - 1] = getchar()))
+    {
+        len ++;
+        if (len == capacity)
+        {
+            int addCapacity = capacity >> 1;
+            str = realloc(str, (capacity + addCapacity) * sizeof(char));
+            memset(str + capacity, 0, sizeof(char) * addCapacity);
+            capacity += addCapacity;
+        }
+    }
+    str[len - 1] = '\0';
+    return str;
+}
+
+
 int main(int argc, const char * argv[]) {
 
-    //testBinaryHeap();
-    
-    int i = 0x12345678;
-    
-    int* p = &i;
-    
-    
+    testBinaryHeap();
+
+
+
     return 0;
 }
+
+
