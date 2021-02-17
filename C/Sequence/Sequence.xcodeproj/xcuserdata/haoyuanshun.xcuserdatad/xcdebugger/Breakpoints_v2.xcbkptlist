@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Bucket
-   uuid = "9F4D2D7B-E5A2-4DAE-B928-B530BA000889"
+   uuid = "CFB6124E-4490-41CC-A4DD-076BA2BABF44"
    type = "1"
    version = "2.0">
    <Breakpoints>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "2F536BE2-4459-4960-8FCE-71B023567C1D"
+            uuid = "3FD0D47A-E439-484C-A72B-7F10558B92E9"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Heaps/main.c"
+            filePath = "Sequence/main.c"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "216"
-            endingLineNumber = "216"
+            startingLineNumber = "21"
+            endingLineNumber = "21"
             landmarkName = "main(argc, argv)"
             landmarkType = "9">
          </BreakpointContent>
@@ -23,80 +23,80 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "A37FCBF3-A622-451B-8423-748CEE42A9FA"
+            uuid = "2FA1C198-7B44-4B4A-8FE7-4F1C7F0C862B"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Heaps/main.c"
+            filePath = "Sequence/HS_KMP.c"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "209"
-            endingLineNumber = "209"
-            landmarkName = "unknown"
-            landmarkType = "0">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "113A80AE-EE1F-4D34-A01A-526AB995CFA2"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Heaps/main.c"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "27"
-            endingLineNumber = "27"
-            landmarkName = "testBinaryHeap()"
+            startingLineNumber = "52"
+            endingLineNumber = "52"
+            landmarkName = "hs_kmp(text, pattern)"
             landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "749D26A3-D6E6-4C56-A377-26EB30D5151C"
+            uuid = "6AF7EEBC-531C-4E47-AA2C-3CE42DC09F51"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Heaps/HS_BinaryHeap.c"
+            filePath = "Sequence/HS_KMP.c"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "270"
-            endingLineNumber = "270"
-            landmarkName = "hs_binaryHeapRemove(pHeap)"
+            startingLineNumber = "63"
+            endingLineNumber = "63"
+            landmarkName = "hs_kmp(text, pattern)"
             landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "EFCF0B01-3B5C-470A-A7DE-3196630F8130"
+            uuid = "FFB3FECC-6C79-4440-8301-2FAF04441591"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Heaps/HS_BinaryHeap.c"
+            filePath = "Sequence/HS_KMP.c"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "187"
-            endingLineNumber = "187"
-            landmarkName = "hs_binaryHeapNewWithElements(elements, elementSize)"
+            startingLineNumber = "62"
+            endingLineNumber = "62"
+            landmarkName = "hs_kmp(text, pattern)"
             landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "E92D86E6-0B4C-4D7A-B448-DE56A1195DEE"
+            uuid = "09ACD023-2F22-422E-B7B9-91C6FBD16D02"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Heaps/main.c"
+            filePath = "Sequence/HS_KMP.c"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "20"
-            endingLineNumber = "20"
-            landmarkName = "testBinaryHeap()"
+            startingLineNumber = "54"
+            endingLineNumber = "54"
+            landmarkName = "hs_kmp(text, pattern)"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "279B593A-6C7C-486D-8F0F-30C4495ABF0A"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Sequence/main.c"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "24"
+            endingLineNumber = "24"
+            landmarkName = "main(argc, argv)"
             landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>

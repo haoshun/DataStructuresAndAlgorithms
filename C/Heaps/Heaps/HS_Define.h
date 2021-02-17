@@ -26,5 +26,4 @@ void hs_printArray(HS_ELEMENT_TYPE* elements, HS_HEAP_SIZE elementSize);
 
 
 
-
 #endif /* HS_Define_h */

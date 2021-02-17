@@ -56,6 +56,16 @@ int main(int argc, const char * argv[]) {
         hs_heapSort(nums, 3, 9);
         //hs_quickSort(nums, 0, 9);
         hs_printElements(nums, 0, 9);
+        
+        int a = 12, b = 0, z = 0;
+        
+        z = (a >> 1) + (b >> 1);
+        
+        z = (a&b) + ((a^b)>>1);
+        
+//        x = 131 % 4;
+//        //equals:
+//        y = 131 & (4 - 1);
     
     }
     return 0;

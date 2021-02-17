@@ -50,10 +50,168 @@ char* getStr()
     return str;
 }
 
+typedef struct {
+    void* elements;
+    int capacity;
+    int size;
+} S_Array;
+
+// S_Path* createPath()
+// {
+//     S_Path* pPath = (S_Path*)malloc(sizeof(S_Path));
+//     if(pPath)
+//     {
+//         pPath -> size = 0;
+//         pPath -> capacity = kDefaultCapacity;
+//         pPath -> elements = (int*) calloc(pPath -> capacity, sizeof(int));
+//     }
+//     return pPath;
+// }
+
+// S_PathArray* createArray()
+// {
+//     S_PathArray* pArray = (S_Path*)malloc(sizeof(S_Path));
+//     if(pArray)
+//     {
+//         pArray -> size = 0;
+//         pArray -> capacity = kDefaultCapacity >> 1;
+//         pArray -> elements = (S_Path*) calloc(pArray -> capacity, sizeof(S_Path));
+//     }
+//     return pArray;
+// }
+
+
+
+int const kDefaultCapacity = 8;
+
+typedef struct TreeNode T_Node;
+// typedef struct {
+//     int* elements;
+//     int capacity;
+//     int size;
+// } S_Path;
+
+// typedef struct {
+//     S_Path* paths;
+//     int capacity;
+//     int size;
+// } S_PathArray;
+
+typedef struct {
+    void* elements;
+    int capacity;
+    int size;
+} S_Array;
+
+// S_Path* createPath()
+// {
+//     S_Path* pPath = (S_Path*)malloc(sizeof(S_Path));
+//     if(pPath)
+//     {
+//         pPath -> size = 0;
+//         pPath -> capacity = kDefaultCapacity;
+//         pPath -> elements = (int*) calloc(pPath -> capacity, sizeof(int));
+//     }
+//     return pPath;
+// }
+
+// S_PathArray* createArray()
+// {
+//     S_PathArray* pArray = (S_Path*)malloc(sizeof(S_Path));
+//     if(pArray)
+//     {
+//         pArray -> size = 0;
+//         pArray -> capacity = kDefaultCapacity >> 1;
+//         pArray -> elements = (S_Path*) calloc(pArray -> capacity, sizeof(S_Path));
+//     }
+//     return pArray;
+// }
+
+S_Array* createArrayWithCapacity(int capacity, size_t __size)
+{
+    S_Array* pArray = (S_Array*)malloc(sizeof(S_Array));
+    if(pArray)
+    {
+        pArray -> size = 0;
+        pArray -> capacity = capacity;
+        pArray -> elements = calloc(pArray -> capacity, __size);
+    }
+    return pArray;
+}
+
+S_Array* createArray(size_t __size)
+{
+    return createArrayWithCapacity(kDefaultCapacity, __size);
+}
+
+void ensureCapacity(S_Array* pArray, int size, size_t __size)
+{
+    if(!pArray || pArray -> capacity >= size)
+        return;
+
+    pArray -> capacity += pArray -> capacity >> 1;
+    pArray -> elements = realloc(pArray -> elements, pArray -> capacity * __size);
+}
+
+void s_arrayAdd(S_Array* pArray, void* src, size_t __size)
+{
+    ensureCapacity(pArray, pArray -> size + 1, __size);
+    memcpy(pArray -> elements + pArray -> size * __size, src, __size);
+    pArray -> size ++;
+}
+
+void s_arrayRemove(S_Array* pArray, size_t __size)
+{
+    if(pArray && pArray -> size);
+    {
+        memset(pArray -> elements + (--(pArray -> size)), 0, __size);
+    }
+}
+
+S_Array* s_arrayCopy(S_Array* src, size_t __size)
+{
+    if(src)
+    {
+        S_Array* dest = createArrayWithCapacity(src -> capacity, __size);
+        if(dest)
+        {
+            dest -> size = src -> size;
+            memcpy(dest -> elements, src -> elements, __size * dest -> size);
+        }
+    }
+    return NULL;
+}
+
+void dfs(T_Node* root, int cur_sum, int tar_sum, S_Array** path, S_Array* pathArray)
+{
+    if(!root -> left && !root -> right)
+    {
+        if(cur_sum + root -> val == tar_sum)
+        {
+            S_Array* newPath = s_arrayCopy(*path, sizeof(int));
+            s_arrayAdd(*path, &(root -> val), sizeof(int));
+            s_arrayAdd(pathArray, *path, sizeof(S_Array));
+            *path = newPath;
+        }
+        return;
+    }
+
+    s_arrayAdd(*path, &(root -> val), sizeof(int));
+
+    if(root -> left)
+        dfs(root -> left, cur_sum + root -> val, tar_sum, path, pathArray);
+
+    if(root -> right)
+        dfs(root -> right, cur_sum + root -> val, tar_sum, path, pathArray);
+    
+    s_arrayRemove(*path, sizeof(int));
+}
+
 
 int main(int argc, const char * argv[]) {
 
     testBinaryHeap();
+
 
 
 
