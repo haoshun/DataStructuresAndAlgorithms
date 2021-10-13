@@ -8,6 +8,11 @@
 #ifndef HS_Define_h
 #define HS_Define_h
 
+#include <stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <assert.h>
+
 typedef int HS_TYPE;
 
 typedef unsigned int HS_SIZE;

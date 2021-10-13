@@ -7,13 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1088FB132717096500382DD9 /* HS_UnionFind_QF.c in Sources */ = {isa = PBXBuildFile; fileRef = 1088FB122717096500382DD9 /* HS_UnionFind_QF.c */; };
-		10AE6B3B2615DB7E00900838 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 10AE6B3A2615DB7E00900838 /* main.c */; };
-		10AE6B442615DE1800900838 /* HS_UnionFind.c in Sources */ = {isa = PBXBuildFile; fileRef = 10AE6B432615DE1700900838 /* HS_UnionFind.c */; };
+		106BF55F26F31A280013E5D2 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 106BF55E26F31A280013E5D2 /* main.swift */; };
+		106BF56626F31A610013E5D2 /* Trie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 106BF56526F31A610013E5D2 /* Trie.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		10AE6B352615DB7E00900838 /* CopyFiles */ = {
+		106BF55926F31A280013E5D2 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = /usr/share/man/man1/;
@@ -25,17 +24,13 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		1088FB112717096500382DD9 /* HS_UnionFind_QF.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HS_UnionFind_QF.h; sourceTree = "<group>"; };
-		1088FB122717096500382DD9 /* HS_UnionFind_QF.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = HS_UnionFind_QF.c; sourceTree = "<group>"; };
-		10AE6B372615DB7E00900838 /* UnionFind */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = UnionFind; sourceTree = BUILT_PRODUCTS_DIR; };
-		10AE6B3A2615DB7E00900838 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
-		10AE6B422615DE1700900838 /* HS_UnionFind.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HS_UnionFind.h; sourceTree = "<group>"; };
-		10AE6B432615DE1700900838 /* HS_UnionFind.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = HS_UnionFind.c; sourceTree = "<group>"; };
-		10AE6B462615DE7D00900838 /* HS_Define.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HS_Define.h; sourceTree = "<group>"; };
+		106BF55B26F31A280013E5D2 /* Trie */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Trie; sourceTree = BUILT_PRODUCTS_DIR; };
+		106BF55E26F31A280013E5D2 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		106BF56526F31A610013E5D2 /* Trie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trie.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		10AE6B342615DB7E00900838 /* Frameworks */ = {
+		106BF55826F31A280013E5D2 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -45,69 +40,66 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		10AE6B2E2615DB7D00900838 = {
+		106BF55226F31A280013E5D2 = {
 			isa = PBXGroup;
 			children = (
-				10AE6B392615DB7E00900838 /* UnionFind */,
-				10AE6B382615DB7E00900838 /* Products */,
+				106BF55D26F31A280013E5D2 /* Trie */,
+				106BF55C26F31A280013E5D2 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		10AE6B382615DB7E00900838 /* Products */ = {
+		106BF55C26F31A280013E5D2 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				10AE6B372615DB7E00900838 /* UnionFind */,
+				106BF55B26F31A280013E5D2 /* Trie */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		10AE6B392615DB7E00900838 /* UnionFind */ = {
+		106BF55D26F31A280013E5D2 /* Trie */ = {
 			isa = PBXGroup;
 			children = (
-				10AE6B3A2615DB7E00900838 /* main.c */,
-				10AE6B422615DE1700900838 /* HS_UnionFind.h */,
-				10AE6B432615DE1700900838 /* HS_UnionFind.c */,
-				10AE6B462615DE7D00900838 /* HS_Define.h */,
-				1088FB112717096500382DD9 /* HS_UnionFind_QF.h */,
-				1088FB122717096500382DD9 /* HS_UnionFind_QF.c */,
+				106BF55E26F31A280013E5D2 /* main.swift */,
+				106BF56526F31A610013E5D2 /* Trie.swift */,
 			);
-			path = UnionFind;
+			path = Trie;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		10AE6B362615DB7E00900838 /* UnionFind */ = {
+		106BF55A26F31A280013E5D2 /* Trie */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 10AE6B3E2615DB7E00900838 /* Build configuration list for PBXNativeTarget "UnionFind" */;
+			buildConfigurationList = 106BF56226F31A280013E5D2 /* Build configuration list for PBXNativeTarget "Trie" */;
 			buildPhases = (
-				10AE6B332615DB7E00900838 /* Sources */,
-				10AE6B342615DB7E00900838 /* Frameworks */,
-				10AE6B352615DB7E00900838 /* CopyFiles */,
+				106BF55726F31A280013E5D2 /* Sources */,
+				106BF55826F31A280013E5D2 /* Frameworks */,
+				106BF55926F31A280013E5D2 /* CopyFiles */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = UnionFind;
-			productName = UnionFind;
-			productReference = 10AE6B372615DB7E00900838 /* UnionFind */;
+			name = Trie;
+			productName = Trie;
+			productReference = 106BF55B26F31A280013E5D2 /* Trie */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		10AE6B2F2615DB7D00900838 /* Project object */ = {
+		106BF55326F31A280013E5D2 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1300;
+				LastSwiftUpdateCheck = 1250;
+				LastUpgradeCheck = 1250;
 				TargetAttributes = {
-					10AE6B362615DB7E00900838 = {
-						CreatedOnToolsVersion = 12.4;
+					106BF55A26F31A280013E5D2 = {
+						CreatedOnToolsVersion = 12.5.1;
 					};
 				};
 			};
-			buildConfigurationList = 10AE6B322615DB7D00900838 /* Build configuration list for PBXProject "UnionFind" */;
+			buildConfigurationList = 106BF55626F31A280013E5D2 /* Build configuration list for PBXProject "Trie" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -115,31 +107,30 @@
 				en,
 				Base,
 			);
-			mainGroup = 10AE6B2E2615DB7D00900838;
-			productRefGroup = 10AE6B382615DB7E00900838 /* Products */;
+			mainGroup = 106BF55226F31A280013E5D2;
+			productRefGroup = 106BF55C26F31A280013E5D2 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				10AE6B362615DB7E00900838 /* UnionFind */,
+				106BF55A26F31A280013E5D2 /* Trie */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		10AE6B332615DB7E00900838 /* Sources */ = {
+		106BF55726F31A280013E5D2 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1088FB132717096500382DD9 /* HS_UnionFind_QF.c in Sources */,
-				10AE6B3B2615DB7E00900838 /* main.c in Sources */,
-				10AE6B442615DE1800900838 /* HS_UnionFind.c in Sources */,
+				106BF55F26F31A280013E5D2 /* main.swift in Sources */,
+				106BF56626F31A610013E5D2 /* Trie.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		10AE6B3C2615DB7E00900838 /* Debug */ = {
+		106BF56026F31A280013E5D2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -190,15 +181,17 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MACOSX_DEPLOYMENT_TARGET = 11.3;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
-		10AE6B3D2615DB7E00900838 /* Release */ = {
+		106BF56126F31A280013E5D2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -243,57 +236,59 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MACOSX_DEPLOYMENT_TARGET = 11.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 			};
 			name = Release;
 		};
-		10AE6B3F2615DB7E00900838 /* Debug */ = {
+		106BF56326F31A280013E5D2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6BEQU99RP5;
 				ENABLE_HARDENED_RUNTIME = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
-		10AE6B402615DB7E00900838 /* Release */ = {
+		106BF56426F31A280013E5D2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6BEQU99RP5;
 				ENABLE_HARDENED_RUNTIME = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		10AE6B322615DB7D00900838 /* Build configuration list for PBXProject "UnionFind" */ = {
+		106BF55626F31A280013E5D2 /* Build configuration list for PBXProject "Trie" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				10AE6B3C2615DB7E00900838 /* Debug */,
-				10AE6B3D2615DB7E00900838 /* Release */,
+				106BF56026F31A280013E5D2 /* Debug */,
+				106BF56126F31A280013E5D2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		10AE6B3E2615DB7E00900838 /* Build configuration list for PBXNativeTarget "UnionFind" */ = {
+		106BF56226F31A280013E5D2 /* Build configuration list for PBXNativeTarget "Trie" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				10AE6B3F2615DB7E00900838 /* Debug */,
-				10AE6B402615DB7E00900838 /* Release */,
+				106BF56326F31A280013E5D2 /* Debug */,
+				106BF56426F31A280013E5D2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 10AE6B2F2615DB7D00900838 /* Project object */;
+	rootObject = 106BF55326F31A280013E5D2 /* Project object */;
 }
