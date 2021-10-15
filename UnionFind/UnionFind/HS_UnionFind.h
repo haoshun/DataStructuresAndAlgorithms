@@ -18,7 +18,9 @@
  查找（Find）时间复杂度O(logn)
  合并（Union）时间复杂度O(logn)
  
- 建议使用
+ 参考维基百科：https://en.wikipedia.org/wiki/Disjoint-set_data_structure#Time_complexity
+ 
+ 个人建议使用
  基于rank的优化
  并使用路径减半（Path Halving） 或 路径分裂（Path Spliting）
  **/

@@ -8,8 +8,13 @@
 #include "HS_UnionFind.h"
 
 
-//size 和 rank 优先选择使用rank（即树高）方式
+/*
+ size 和 rank 优先选择使用rank（即树高）方式
+ **/
 //#define UF_QU_S
+
+
+
 
 struct hs_union_find {
     /**
@@ -50,13 +55,15 @@ void _hs_uf_range_check(HS_UnionFind* pUF, HS_INDEX index)
     assert(index >= 0 && index < pUF -> capacity);
 }
 
+#pragma mark - Union
+
 /*
  未加优化
  将p1整棵树嫁接到p2上
  p2为新的根节点
  不建议采用，可能会导致树退化为链表
  */
-void _uf_quick_union(HS_UnionFind* pUF, HS_INDEX p1, HS_INDEX p2)
+void _uf_union(HS_UnionFind* pUF, HS_INDEX p1, HS_INDEX p2)
 {
     pUF -> parents[p1] = p2;
 }
@@ -67,7 +74,7 @@ void _uf_quick_union(HS_UnionFind* pUF, HS_INDEX p1, HS_INDEX p2)
  也可能出现树不平衡的情况
  不建议采用
  **/
-void _uf_qu_size(HS_UnionFind* pUF, HS_INDEX p1, HS_INDEX p2)
+void _uf_union_size(HS_UnionFind* pUF, HS_INDEX p1, HS_INDEX p2)
 {
     if(pUF -> sizes[p1] < pUF -> sizes[p2])
     {
@@ -89,7 +96,7 @@ void _uf_qu_size(HS_UnionFind* pUF, HS_INDEX p1, HS_INDEX p2)
  但是随着Union次数的增多，树的高度依然会越来越高
  建议继续优化
  */
-void _uf_qu_rank(HS_UnionFind* pUF, HS_INDEX p1, HS_INDEX p2)
+void _uf_union_rank(HS_UnionFind* pUF, HS_INDEX p1, HS_INDEX p2)
 {
     if(pUF -> ranks[p1] < pUF -> ranks[p2])
         pUF -> parents[p1] = p2;
@@ -103,6 +110,66 @@ void _uf_qu_rank(HS_UnionFind* pUF, HS_INDEX p1, HS_INDEX p2)
 }
 
 #endif
+
+#pragma mark - Find
+
+HS_INDEX _uf_find(HS_UnionFind* pUF, HS_INDEX v)
+{
+    while (v != pUF -> parents[v]) {
+        v = pUF -> parents[v];
+    }
+    return v;
+}
+
+
+/*
+ 使用路径压缩（Path Compression）优化
+ 路径上所有节点指向根节点
+ 在每次查找操作时将合并过来的节点指向更节点
+ 成本较高
+ 不推荐
+**/
+HS_INDEX _uf_find_pc(HS_UnionFind* pUF, HS_INDEX v)
+{
+    if (pUF -> parents[v] != v) {
+        pUF -> parents[v] = _uf_find_pc(pUF, pUF -> parents[v]);
+    }
+    return pUF -> parents[v];
+}
+
+
+/*
+ 使用路径分裂（Path Spliting）优化
+ 使路径上的每个节点都指向其祖父节点
+ 推荐
+**/
+HS_INDEX _uf_find_ps(HS_UnionFind* pUF, HS_INDEX v)
+{
+    while (v != pUF -> parents[v]) {
+        int parent = pUF -> parents[v];
+        pUF -> parents[v] = pUF -> parents[parent];
+        v = parent;
+    }
+    return v;
+}
+
+
+/*
+ 使用路径减半（Path Halving）优化
+ 使路径上每隔一个节点就指向其祖父节点
+ 推荐
+**/
+HS_INDEX _uf_find_ph(HS_UnionFind* pUF, HS_INDEX v)
+{
+    while (v != pUF -> parents[v]) {
+        pUF -> parents[v] = pUF -> parents[pUF -> parents[v]];
+        v = pUF -> parents[v];
+    }
+    return v;
+}
+
+
+
 
 
 #pragma mark -
@@ -144,10 +211,18 @@ HS_UnionFind* hs_ufCreate(HS_SIZE capacity)
 HS_INDEX hs_ufFind(HS_UnionFind* pUF, HS_TYPE v)
 {
     _hs_uf_range_check(pUF, v);
-    while (v != pUF -> parents[v]) {
-        v = pUF -> parents[v];
-    }
-    return v;
+
+    //未优化Find
+    //return _uf_find(pUF, v);
+    
+    //使用路径压缩Find
+    //return _uf_find_pc(pUF, v);
+    
+    //使用路径分裂Find
+    //return _uf_find_ps(pUF, v);
+    
+    //使用路径减半Find
+    return _uf_find_ph(pUF, v);
 }
 
 
@@ -165,14 +240,14 @@ void hs_ufUnion(HS_UnionFind* pUF, HS_TYPE v1, HS_TYPE v2)
     if(p1 == p2) return;
     
     //未优化合并
-    //_uf_quick_union(pUF, p1, p2);
+    //_uf_union(pUF, p1, p2);
     
 
 #ifdef UF_QU_S
-    _uf_qu_size(pUF, p1, p2);
+    _uf_union_size(pUF, p1, p2);
     
 #else
-    _uf_qu_rank(pUF, p1, p2);
+    _uf_union_rank(pUF, p1, p2);
     
 #endif
 
