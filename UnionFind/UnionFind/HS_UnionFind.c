@@ -44,14 +44,14 @@ struct hs_union_find {
 #pragma mark -
 
 
-void _hs_uf_pointer_check(HS_UnionFind* pUF)
+void _uf_pointer_check(HS_UnionFind* pUF)
 {
     assert(pUF != NULL);
 }
 
-void _hs_uf_range_check(HS_UnionFind* pUF, HS_INDEX index)
+void _uf_range_check(HS_UnionFind* pUF, HS_INDEX index)
 {
-    _hs_uf_pointer_check(pUF);
+    _uf_pointer_check(pUF);
     assert(index >= 0 && index < pUF -> capacity);
 }
 
@@ -210,7 +210,7 @@ HS_UnionFind* hs_ufCreate(HS_SIZE capacity)
  */
 HS_INDEX hs_ufFind(HS_UnionFind* pUF, HS_TYPE v)
 {
-    _hs_uf_range_check(pUF, v);
+    _uf_range_check(pUF, v);
 
     //未优化Find
     //return _uf_find(pUF, v);

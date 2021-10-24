@@ -22,14 +22,14 @@ struct hs_union_find_qf {
 
 
 
-void _hs_uf_pointer_check(HS_UnionFind_QF* pUF)
+void _uf_qf_pointer_check(HS_UnionFind_QF* pUF)
 {
     assert(pUF != NULL);
 }
 
-void _hs_uf_range_check(HS_UnionFind_QF* pUF, HS_INDEX index)
+void _uf_qf_range_check(HS_UnionFind_QF* pUF, HS_INDEX index)
 {
-    _hs_uf_pointer_check(pUF);
+    _uf_qf_pointer_check(pUF);
     assert(index >= 0 && index < pUF -> capacity);
 }
 
@@ -64,7 +64,7 @@ HS_UnionFind_QF* hs_uf_qf_Create(HS_SIZE capacity)
  */
 HS_INDEX hs_uf_qf_Find(HS_UnionFind_QF* pUF, HS_TYPE v)
 {
-    _hs_uf_range_check(pUF, v);
+    _uf_qf_range_check(pUF, v);
     return pUF -> parents[v];
 }
 
@@ -109,7 +109,7 @@ bool hs_uf_qf_SameSet(HS_UnionFind_QF* pUF, HS_TYPE v1, HS_TYPE v2)
  */
 void hs_uf_qf_Free(HS_UnionFind_QF* pUF)
 {
-    _hs_uf_pointer_check(pUF);
+    _uf_qf_pointer_check(pUF);
     
     if(pUF -> parents && pUF -> capacity)
         free(pUF -> parents);
