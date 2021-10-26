@@ -18,7 +18,7 @@
 
 typedef long HS_KEY;
 typedef long HS_VALUE;
-typedef unsigned int HS_LEVEL;
+typedef int HS_LEVEL;
 
 #define HS_NONE ((HS_VALUE)NULL)
 

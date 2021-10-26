@@ -215,3 +215,21 @@ HS_VALUE hs_slRemove(HS_SkipList* pSL, HS_KEY key)
 
 
 
+#pragma mark - print
+
+void print_sl(HS_SkipList* pSL)
+{
+    _sl_pointer_check(pSL);
+    
+    HS_SL_Node* pNode = pSL -> head;
+    for(int i = pSL -> max_level - 1 ; i >= 0 ; --i, pNode = pSL -> head)
+    {
+        printf("level %d :", i);
+        while (pNode ->_next[i]) {
+            printf("(%ld,%ld), ", pNode -> _next[i] -> _key, pNode -> _next[i] -> _value);
+            pNode = pNode -> _next[i];
+        }
+        printf("\n");
+    }
+}
+

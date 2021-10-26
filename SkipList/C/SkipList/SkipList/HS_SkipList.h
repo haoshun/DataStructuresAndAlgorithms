@@ -55,4 +55,12 @@ HS_VALUE hs_slRemove(HS_SkipList* pSL, HS_KEY key);
 
 
 
+#pragma mark - print
+
+void print_sl(HS_SkipList* pSL);
+
+
+
+
+
 #endif /* HS_SkipList_h */
