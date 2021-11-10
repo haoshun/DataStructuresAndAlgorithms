@@ -7,7 +7,7 @@
 
 #include "HS_BTree.h"
 
-
+#define KEYTYPE_LEN sizeof(HS_KEYTYPE)
 
 
 struct _b_tree_node {
@@ -101,6 +101,16 @@ HS_BT_Result* _bt_createResult(HS_BT_Node* pNode, HS_INDEX pos)
     return pResult;
 }
 
+void _bt_destroyNode(HS_BT_Node* pNode)
+{
+    if(pNode)
+    {
+        free(pNode -> _keys);
+        free(pNode -> _children);
+        free(pNode);
+    }
+}
+
 
 void _bt_split_child(HS_BTree* pBT, HS_BT_Node* parent, HS_INDEX index)
 {
@@ -108,9 +118,6 @@ void _bt_split_child(HS_BTree* pBT, HS_BT_Node* parent, HS_INDEX index)
     if(newNode)
     {
         HS_BT_Node* pNode = parent -> _children[index];
-//        unsigned int full = m - 1;
-//        unsigned int d = full / 2;
-        
         HS_SCOPE min_keys = pBT -> t - 1;
         
         newNode -> _isLeaf = pNode -> _isLeaf;
@@ -119,7 +126,11 @@ void _bt_split_child(HS_BTree* pBT, HS_BT_Node* parent, HS_INDEX index)
         if(!pNode -> _isLeaf)
             memcpy(newNode -> _children, pNode -> _children + (pBT -> t), sizeof(HS_BT_Node*) * pBT -> t);
         
+        
+        memset(pNode -> _keys + min_keys , 0, KEYTYPE_LEN * (pNode -> _keyCount - min_keys));
+        memset(pNode -> _children + min_keys + 1, 0, sizeof(HS_BT_Node*) * (pNode -> _keyCount - min_keys));
         pNode -> _keyCount = min_keys;
+        
         
         memmove(parent -> _keys + index + 1, parent -> _keys + index, sizeof(HS_KEYTYPE) * (parent -> _keyCount - index));
         parent -> _keys[index] = pNode -> _keys[pBT -> t];
@@ -181,6 +192,160 @@ HS_BT_Result* _bt_search(HS_BT_Node* pNode, HS_KEYTYPE key)
 }
 
 
+void _bt_merge_child(HS_BTree* pBT, HS_BT_Node* parent, HS_INDEX index)
+{
+    HS_KEYTYPE key = parent -> _keys[index];
+    HS_BT_Node* leftChild = parent -> _children[index];
+    HS_BT_Node* rightChild = parent -> _children[index + 1];
+    
+    parent -> _keyCount --;
+    memmove(parent -> _keys + index, parent -> _keys + index + 1, KEYTYPE_LEN * (parent -> _keyCount - index));
+    memset(parent -> _keys + parent -> _keyCount, 0, KEYTYPE_LEN);
+    memmove(parent -> _children + index + 1, parent -> _children + index + 2, sizeof(HS_BT_Node*) * (parent -> _keyCount - index));
+    parent -> _children[parent -> _keyCount] = NULL;
+    if(!parent -> _keyCount)
+    {
+        _bt_destroyNode(parent);
+        pBT -> root = leftChild;
+    }
+        
+    
+    leftChild -> _keys[leftChild -> _keyCount] = key;
+    leftChild -> _keyCount ++;
+    
+    memcpy(leftChild -> _keys + leftChild -> _keyCount, rightChild -> _keys, KEYTYPE_LEN * rightChild -> _keyCount);
+    memcpy(leftChild -> _children + leftChild -> _keyCount, rightChild -> _children, sizeof(HS_BT_Node*) * (rightChild -> _keyCount + 1));
+    leftChild -> _keyCount += rightChild -> _keyCount;
+    
+    _bt_destroyNode(rightChild);
+    
+}
+
+
+void _bt_counterclockwise_rotate(HS_BT_Node* parent, HS_INDEX index)
+{
+    HS_BT_Node* leftChild = parent -> _children[index];
+    HS_BT_Node* rightChild = parent -> _children[index + 1];
+    
+    leftChild -> _keys[leftChild -> _keyCount++] = parent -> _keys[index];
+    leftChild -> _children[leftChild -> _keyCount] = rightChild -> _children[0];
+    
+    parent -> _keys[index] = rightChild -> _keys[0];
+    
+    memmove(rightChild -> _keys, rightChild -> _keys + 1, KEYTYPE_LEN * (rightChild -> _keyCount - 1));
+    memmove(rightChild -> _children, rightChild -> _children + 1, sizeof(HS_BT_Node*) * rightChild -> _keyCount);
+    rightChild -> _children[rightChild -> _keyCount--] = NULL;
+}
+
+void _bt_clockwise_rotate(HS_BT_Node* parent, HS_INDEX index)
+{
+    HS_BT_Node* leftChild = parent -> _children[index - 1];
+    HS_BT_Node* rightChild = parent -> _children[index];
+    
+    memmove(rightChild -> _keys + 1, rightChild -> _keys, KEYTYPE_LEN * rightChild -> _keyCount);
+    memmove(rightChild -> _children + 1, rightChild -> _children, sizeof(HS_BT_Node*) * (++rightChild -> _keyCount));
+    rightChild -> _children[0] = leftChild -> _children[leftChild -> _keyCount];
+    rightChild -> _keys[0] = parent -> _keys[index - 1];
+    
+    parent -> _keys[index - 1] = leftChild -> _keys[--leftChild ->_keyCount];
+}
+
+
+void _bt_delete(HS_BTree* pBT, HS_BT_Node** ppNode, HS_KEYTYPE key)
+{
+    HS_INDEX i = 0;
+    HS_BT_Node* pNode = *ppNode;
+    
+    while (i < pNode -> _keyCount && key > pNode -> _keys[i])
+        ++i;
+    
+    //在pNode中找到key
+    if(i < pNode -> _keyCount && key == pNode -> _keys[i])
+    {
+        //pNode 为叶子结点
+        if(pNode -> _isLeaf)
+        {
+            pNode -> _keyCount--;
+            memmove(pNode -> _keys + i, pNode -> _keys + i + 1, KEYTYPE_LEN * (pNode -> _keyCount - i));
+            memset(pNode -> _keys + pNode -> _keyCount, 0, KEYTYPE_LEN);
+            
+            //此叶子结点也是根结点 删除后树为空树
+            if(!pNode -> _keyCount)
+            {
+                *ppNode = NULL;
+                free(pNode);
+            }
+            return;
+        }
+        
+        //pNode 为内部结点
+        if(pNode -> _children[i] ->_keyCount >= pBT -> t)
+        {
+            HS_BT_Node* tmp = pNode -> _children[i];
+            
+            while (!tmp -> _isLeaf) {
+                tmp = tmp -> _children[tmp -> _keyCount];
+            }
+            
+            HS_KEYTYPE newKey = tmp -> _keys[tmp ->_keyCount - 1];
+            pNode -> _keys[i] = newKey;
+            _bt_delete(pBT, &(pNode -> _children[i]), newKey);
+        }
+        else if (pNode -> _children[i + 1] -> _keyCount >= pBT -> t)
+        {
+            HS_BT_Node* tmp = pNode -> _children[i + 1];
+            
+            while (!tmp -> _isLeaf) {
+                tmp = tmp -> _children[0];
+            }
+            
+            HS_KEYTYPE newKey = tmp -> _keys[0];
+            pNode -> _keys[i] = newKey;
+            _bt_delete(pBT, &(pNode -> _children[i + 1]), newKey);
+        }
+        else
+        {
+            _bt_merge_child(pBT, pNode, i);
+            
+            _bt_delete(pBT, &(pNode -> _children[i]), key);
+        }
+    }
+    else
+    {
+        if(pNode -> _isLeaf)
+            return;
+        
+        if(pNode -> _children[i] -> _keyCount == pBT -> t - 1)
+        {
+            HS_BT_Node* leftSibling = i ? pNode -> _children[i - 1] : NULL;
+            HS_BT_Node* rightSibling = i < pNode -> _keyCount ? pNode -> _children[i + 1] : NULL;
+            
+            if((leftSibling && leftSibling -> _keyCount >= pBT -> t) &&
+               (rightSibling && rightSibling -> _keyCount >= pBT -> t))
+            {
+                if(leftSibling ->_keyCount > rightSibling -> _keyCount)
+                    _bt_clockwise_rotate(pNode, i);
+                else
+                    _bt_counterclockwise_rotate(pNode, i);
+            }
+            else if(leftSibling && leftSibling -> _keyCount >= pBT ->t)
+            {
+                _bt_clockwise_rotate(pNode, i);
+            }
+            else if (rightSibling && rightSibling -> _keyCount >= pBT -> t)
+            {
+                _bt_counterclockwise_rotate(pNode, i);
+            }
+            else
+            {
+                i -= !!leftSibling;
+                _bt_merge_child(pBT, pNode, i);
+            }
+        }
+        
+        _bt_delete(pBT, &(pNode -> _children[i]), key);
+    }
+}
 
 
 
@@ -280,7 +445,11 @@ HS_BT_Result* hs_btSearch(HS_BTree* pBT, HS_KEYTYPE key)
  * @param pBT B 树指针
  * @param key 键
  */
-void hs_btDelete(HS_BTree* pBT, HS_KEYTYPE key);
+void hs_btDelete(HS_BTree* pBT, HS_KEYTYPE key)
+{
+    if (!hs_btIsEmpty(pBT))
+        _bt_delete(pBT, &(pBT -> root), key);
+}
 
 
 
