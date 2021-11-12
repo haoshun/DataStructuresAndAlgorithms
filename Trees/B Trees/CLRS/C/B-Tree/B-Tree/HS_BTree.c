@@ -69,15 +69,8 @@ HS_SCOPE __get_max_keys(HS_DEGREE t)
 }
 
 
-#pragma mark -
 
-void _bt_pointer_check(HS_BTree* pBT)
-{
-    assert(pBT != NULL);
-}
-
-
-HS_BT_Node* _bt_createNode(HS_SCOPE max_keys)
+HS_BT_Node* __bt_createNode(HS_SCOPE max_keys)
 {
     HS_BT_Node* pNode = (HS_BT_Node*)calloc(1, sizeof(HS_BT_Node));
     if (pNode)
@@ -90,7 +83,7 @@ HS_BT_Node* _bt_createNode(HS_SCOPE max_keys)
 }
 
 
-HS_BT_Result* _bt_createResult(HS_BT_Node* pNode, HS_INDEX pos)
+HS_BT_Result* __bt_createResult(HS_BT_Node* pNode, HS_INDEX pos)
 {
     HS_BT_Result* pResult = (HS_BT_Result*)malloc(sizeof(HS_BT_Result));
     if(pResult)
@@ -101,7 +94,7 @@ HS_BT_Result* _bt_createResult(HS_BT_Node* pNode, HS_INDEX pos)
     return pResult;
 }
 
-void _bt_destroyNode(HS_BT_Node* pNode)
+void __bt_freeNode(HS_BT_Node* pNode)
 {
     if(pNode)
     {
@@ -112,9 +105,17 @@ void _bt_destroyNode(HS_BT_Node* pNode)
 }
 
 
+#pragma mark -
+
+void _bt_pointer_check(HS_BTree* pBT)
+{
+    assert(pBT != NULL);
+}
+
+
 void _bt_split_child(HS_BTree* pBT, HS_BT_Node* parent, HS_INDEX index)
 {
-    HS_BT_Node* newNode = _bt_createNode(pBT -> max_keys);
+    HS_BT_Node* newNode = __bt_createNode(pBT -> max_keys);
     if(newNode)
     {
         HS_BT_Node* pNode = parent -> _children[index];
@@ -183,7 +184,7 @@ HS_BT_Result* _bt_search(HS_BT_Node* pNode, HS_KEYTYPE key)
         ++i;
     
     if(i < pNode -> _keyCount && key == pNode -> _keys[i])
-        return _bt_createResult(pNode, i);
+        return __bt_createResult(pNode, i);
     
     if(pNode -> _isLeaf)
         return NULL;
@@ -205,7 +206,7 @@ void _bt_merge_child(HS_BTree* pBT, HS_BT_Node* parent, HS_INDEX index)
     parent -> _children[parent -> _keyCount] = NULL;
     if(!parent -> _keyCount)
     {
-        _bt_destroyNode(parent);
+        __bt_freeNode(parent);
         pBT -> root = leftChild;
     }
         
@@ -217,7 +218,7 @@ void _bt_merge_child(HS_BTree* pBT, HS_BT_Node* parent, HS_INDEX index)
     memcpy(leftChild -> _children + leftChild -> _keyCount, rightChild -> _children, sizeof(HS_BT_Node*) * (rightChild -> _keyCount + 1));
     leftChild -> _keyCount += rightChild -> _keyCount;
     
-    _bt_destroyNode(rightChild);
+    __bt_freeNode(rightChild);
     
 }
 
@@ -348,10 +349,19 @@ void _bt_delete(HS_BTree* pBT, HS_BT_Node** ppNode, HS_KEYTYPE key)
 }
 
 
+void _bt_free(HS_BT_Node* pNode)
+{
+    if (!pNode -> _isLeaf)
+        for (int i = 0 ; i <= pNode ->_keyCount; ++i)
+            _bt_free(pNode -> _children[i]);
+
+    __bt_freeNode(pNode);
+}
 
 
 
-#pragma mark -
+
+#pragma mark - ADT
 
 /**
  * 创建B树
@@ -397,7 +407,7 @@ void hs_btInsert(HS_BTree* pBT, HS_KEYTYPE key)
     
     if(hs_btIsEmpty(pBT))
     {
-        pNode = _bt_createNode(pBT -> max_keys);
+        pNode = __bt_createNode(pBT -> max_keys);
         if (pNode)
         {
             pNode -> _keys[0] = key;
@@ -410,7 +420,7 @@ void hs_btInsert(HS_BTree* pBT, HS_KEYTYPE key)
     HS_BT_Node* pRoot = pBT -> root;
     if(pRoot -> _keyCount == pBT -> max_keys)
     {
-        HS_BT_Node* newRoot = _bt_createNode(pBT -> max_keys);
+        HS_BT_Node* newRoot = __bt_createNode(pBT -> max_keys);
         if(newRoot)
         {
             pBT -> root = newRoot;
@@ -457,6 +467,13 @@ void hs_btDelete(HS_BTree* pBT, HS_KEYTYPE key)
  * 销毁B树
  * @param pBT B树指针
  */
-void hs_btFree(HS_BTree* pBT);
+void hs_btFree(HS_BTree* pBT)
+{
+    if(!hs_btIsEmpty(pBT))
+    {
+        _bt_free(pBT -> root);
+        free(pBT);
+    }
+}
 
 
