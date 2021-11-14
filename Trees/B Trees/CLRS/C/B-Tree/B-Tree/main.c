@@ -12,7 +12,6 @@
 
 int main(int argc, const char * argv[]) {
     
-    //HS_BTree* pBT = hs_btCreate(3);
 
     
     
