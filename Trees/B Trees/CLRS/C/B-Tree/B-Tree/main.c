@@ -14,9 +14,11 @@ int main(int argc, const char * argv[]) {
     
     //HS_BTree* pBT = hs_btCreate(3);
     
-
+    for (int i = 0; i < 100; ++i) {
+        printf("----------");
+    }
     
-    
+    printf("\n");
     
     
     return 0;

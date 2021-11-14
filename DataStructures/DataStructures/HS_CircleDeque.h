@@ -100,4 +100,7 @@ void hs_circleDequeFree(HS_CircleDeque* pQueue);
 
 void hs_deque_print(HS_CircleDeque* pQueue);
 
+
+void  test(int n);
+
 #endif /* HS_CircleDeque_h */
